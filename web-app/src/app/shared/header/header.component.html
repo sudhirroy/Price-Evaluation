@@ -1,0 +1,16 @@
+<header>
+	<div class="logo">
+		<img [routerLink]="['dashboard']" src="./assets/favicon.png">
+		<span>Price Detail Evaluation</span>
+	</div>
+	<div class="menu">
+		<span *ngFor="let page of menu | slice:-3" [ngClass]="{'active': page.is_active}" [routerLink]="[page.link]">{{page.title}}</span>
+		<!-- <span>Contact Us</span>
+		<span>Help</span> -->
+		<i (click)="isCollapsed = !isCollapsed" class="fa fa-bars"></i>
+		<i *ngIf="isCollapsed" class="menu_cap"></i>
+		<ul *ngIf="isCollapsed" class="hamburger-menu">
+			<li *ngFor="let page of menu" [ngClass]="{'active': page.is_active}" [routerLink]="[page.link]"><img [src]="page.img">{{page.title}}</li>
+		</ul>
+	</div>
+</header>

@@ -1,0 +1,421 @@
+:host {
+    width: 100%;
+    height: 82vh;
+    overflow-y: scroll;
+}
+.price_determiner_page {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    transition-duration: 1s;
+	perspective: 1000px;
+    transform-style: preserve-3d;
+}
+.price_determine_container {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.panel_header {
+    width: 100%;
+    background: #46b29d;
+    padding: 11px;
+    border-radius: 5px;
+    color: white;
+    position: relative;
+    transition-property: all; 
+	transition-duration: 1s;
+	transform: rotateX(0deg); 
+    transform-origin: top; 
+    /* cursor: move; */
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}  
+.panel_header.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.panel_header_icon {
+    width: 13px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+.panel_header i {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.dropdown-selection {
+    display: flex;
+    padding: 25px 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    /*padding: 10px 0; */   
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    overflow: hidden;
+    border-top: 0; 
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 4px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;
+    transition-property: all; 
+	transition-duration: 1s;
+    transform-origin: top; 
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+}
+
+label {
+        display: inline-block;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 0 15px 0 15px;
+    padding-bottom: 15px;
+}
+.row.header {
+    padding-top: 25px;
+}
+
+.row.submit {
+    justify-content: flex-end;
+    padding-right: 35px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.col {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    align-items: center;
+}
+select {
+    border: thin solid gainsboro;
+    padding: 5px;
+    outline: none;
+    border-radius: 6px;
+    width: 60%;
+    min-height: 35px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+#flap_side {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.elements_group_container {
+    display: flex;
+    padding: 0 50px;
+    flex-wrap: wrap;
+}
+.component_title {
+    width: 100%;
+    color: #46b29d;
+    text-decoration: underline;
+    margin-bottom: 25px;
+}
+.elements_group {
+    flex: 1 1 33.33%;
+    padding-right: 15px;
+    padding: 5px 7px;
+    flex-direction: column;
+    border: thin solid gainsboro;
+}
+.elements_group_label {
+    display: block;
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .elements_group_label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .elements_group_label:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .elements_group_label input:checked ~ .checkmark {
+    background-color: #46b29d;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .elements_group_label input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .elements_group_label .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .elements_group input[type='text'] {
+    width: 29px;
+    border: thin solid gainsboro;
+    margin-right: 10px;
+}
+input[type="text"]:focus {
+    outline: thin solid #46b29d;
+}
+button {
+    border: thin solid #46b29d;
+    padding: 8px 15px;
+    background: #46b29d;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    opacity: 0.5;
+    cursor: default;
+}
+button.active {
+    opacity: 1;
+    cursor: pointer;
+}
+.price_detail_row_panel {
+    margin: 0 20px 0 20px;
+    border: thin solid gainsboro;
+    border-radius: 4px;
+}
+.price_detail_row_panel:not(:first-child) {
+    margin-top: 15px;
+}
+.price_detail_row_panel p {
+    background: gainsboro;
+    margin: 0;
+    padding: 7px 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 2px 0px 0px;
+    color: gray;
+    font-weight: bold;
+    position: relative;
+}
+.price_detail_row_panel p i {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    cursor: pointer;
+}
+.row.price_detail_row {
+    padding: 0 15px 0 15px;
+    margin-bottom: 0;
+    position: relative;
+    border-bottom: thin solid gainsboro;
+    padding-bottom: 8px;
+}
+
+.action i {
+    font-size: 18px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.action {
+    position: absolute;
+    right: 36px;
+    bottom: 6px;
+    display: none;
+    color: #46b29d;
+}
+.action.active {
+    display: block;
+}
+.price_detail_row .col {
+    width: 5%;
+    flex-direction: column;
+    padding: 0;
+    align-items: baseline;
+}
+.price_detail_row .col:nth-child(1), .price_detail_row .col:nth-child(2)  {
+    width: 20%;
+}
+.price_detail_row.element .col:nth-child(1) {
+    width: 40%;
+}
+.price_detail_row.element .col:nth-child(2) {
+    width: 5%;
+}
+.price_detail_row.component .col {
+    width: 15.5%;
+    justify-content: end;
+}
+.row.header label {
+    font-weight: bold;
+    color: #46b29d;
+}
+/* .price_detail_row.active .col input {
+    border: none;
+    padding-left: 0;
+    cursor: default;
+} */
+.price_detail_row .col input {
+    width: 100%;
+    margin-top: 6px;
+    border-radius: 4px;
+    outline: none;
+    border: thin solid gainsboro;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.row.add_new {
+    justify-content: flex-end;
+}
+.row.add_new span {
+    color: #46b29d;
+    cursor: pointer;
+}
+.row.add_new span:hover {
+    text-decoration: underline;
+}
+.row.add_new span i {
+    margin-right: 6px;
+}
+@media only screen and (max-width: 1537px) {
+    .price_determine_container {
+        width: 90%;
+    }
+}
+@media only screen and (max-width: 1024px) {
+   .row {
+       padding: 0 12px;
+   }
+   .row.elements_group_container {
+       padding: 0 27px;
+   }
+   .col {
+       width: 50%;
+   }
+   .price_detail_row_panel {
+    width: auto;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+.price_detail_row_panel .row.price_detail_row {
+    flex-direction: row;
+    width: auto;
+    padding: 7px 15px 0px 15px;
+}
+.price_detail_row_panel .row.price_detail_row .col {
+    width: 80px;
+    min-width: 80px;
+    margin-right: 7px;
+}
+.price_detail_row_panel .row.price_detail_row.stock .col:nth-child(1),.price_detail_row_panel .row.price_detail_row.stock .col:nth-child(2), .price_detail_row_panel .row.price_detail_row.element .col:nth-child(1) {
+    width: 200px;
+    min-width: 200px;
+}
+}
+   
+@media only screen and (max-width: 767px) {
+    .row {
+        flex-direction: column;
+        margin: 0;
+    }
+    .col {
+        padding-bottom: 16px;
+        padding-top: 0;
+        width: 90%;
+    }
+    .row.submit {
+        justify-content: center;
+        padding: 10px 27px 30px 27px;
+        align-items: center;
+    }
+ }
+ @media only screen and (max-width: 520px) {
+    .row {
+        width: 99%;
+    }
+    .col {
+        width: 100%;
+    }
+    .row.submit {
+        justify-content: center;
+        padding: 10px 27px 30px 27px;
+    }
+    .row.submit button {
+        padding: 12px 30px;
+    }
+    .price_determiner_page {
+        padding-top: 45px;
+    }
+ }   
+ @media only screen and (max-width: 480px) {
+
+    select {
+        width: 65%;
+    }
+    .col {
+        padding: 5px 10px;
+    }
+    .row {
+        padding: 0 5px;
+    }
+    .row.elements_group_container {
+        padding: 25px 15px;
+    }
+    .checkmark {
+        top: 1px;
+    }
+    
+ }

@@ -1,0 +1,10 @@
+<aside class="aside_menu">
+	<ul>
+		<li *ngFor="let page of menu" [ngClass]="{'active': page.is_active }" [routerLink]="[page.link]"><img [src]="page.img">{{page.title}}</li>
+		<!-- <li [ngClass]="{'active': menu.price_evaluate }" [routerLink]="['price-evaluate']"><img src="assets/tt.png">Price Evaluate</li>
+		<li [ngClass]="{'active': menu.price_detail }" [routerLink]="['price-detail']"><img src="assets/detail.png">Price Detail</li>
+		<li [routerLink]="['dashboard']"><img src="assets/contact.png">Contact Us</li>
+		<li [routerLink]="['dashboard']"><img src="assets/dashboard.png">About Us</li>
+		<li [routerLink]="['dashboard']"><img src="assets/tt.png">Help</li> -->
+	</ul>
+</aside>

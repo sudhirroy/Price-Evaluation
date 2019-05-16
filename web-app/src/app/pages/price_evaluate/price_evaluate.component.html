@@ -1,0 +1,277 @@
+<div class="price_determiner_page">
+
+	<div class="price_determine_container">
+		<div [ngClass]="{'active': panel.active}" class="panel_header"><img class="panel_header_icon"
+				src="assets/favicon.png"> Calculate Price Details<i *ngIf="!panel.active" class="fa fa-plus-circle"
+				(click)="panel.active = true"></i><i *ngIf="panel.active" class="fa fa-minus-circle"
+				(click)="panel.active = false"></i></div>
+
+		<div [ngClass]="{'active': panel.active}" class='container'>
+			<div class="row header">
+				<div class="col">
+					<label>Job Id:</label>
+					<input class="text" type="text"  [(ngModel)]="price_detail_form.job_id">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Item:</label>
+					<input class="text" type="text" [(ngModel)]="price_detail_form.item_code">
+				</div>
+				<div class="col">
+					<label>Quantity:</label>
+					<select [(ngModel)]="price_detail_form.price" (change)="selectPrice(price_detail_form.price)">
+						<option default hidden>Select</option>
+						<option *ngFor="let price of price_detail_form.price_quantity">{{price}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Components:</label>
+					<select [(ngModel)]="price_detail_form.component"
+						(change)="selectComponent(price_detail_form.component)">
+						<option default hidden>Select</option>
+						<option *ngFor="let component of price_detail_form.components">{{component}}</option>
+					</select>
+				</div>
+				<div class="col">
+					<label>Size:</label>
+					<select [(ngModel)]="price_detail_form.selected_size"
+						(change)="selectSize(price_detail_form.selected_size)"
+						[disabled]="!price_detail_form.sizes.length">
+						<option [selected]="!price_detail_form.sizes.length" default hidden>Select</option>
+						<option *ngFor="let size of price_detail_form.sizes">{{size}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Flap Side:</label>
+					<input class="text" type="text" readonly [(ngModel)]="price_detail_form.selected_flap_side">
+				</div>
+
+				<div style="position: relative" class="col">
+					<label>Stock:</label>
+					<select [(ngModel)]="price_detail_form.selected_stock"
+						(change)="selectedStock(price_detail_form.selected_stock)"
+						[disabled]="price_detail_form.selected_size == 'Select'">
+						<option [selected]="!price_detail_form.stock_quantity.length" default hidden>Select</option>
+						<option *ngFor="let stock of price_detail_form.stock_quantity">{{stock}}</option>
+					</select>
+					<i *ngIf="price_detail_form.submitted && (price_detail_form.selected_size !='Select')  && (price_detail_form.price !='Select')" 
+					style="position: absolute;right: -14px;cursor: pointer;color: #46b29d;font-weight: bold;" class="fa fa-calculator" (click)="panel.stockModal = true;"></i>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<label>Printing:</label>
+					<select [(ngModel)]="price_detail_form.selected_print"
+						[disabled]="price_detail_form.selected_size == 'Select'"
+						(change)="selectedPrinting(price_detail_form.selected_print)">
+						<option [selected]="!price_detail_form.printing_quantity.length" default hidden>Select</option>
+						<option *ngFor="let print of price_detail_form.printing_quantity">{{print}}</option>
+					</select>
+				</div>
+
+				<div class="col">
+					<label>Sheet:</label>
+					<select [(ngModel)]="price_detail_form.selected_sheet"
+						[disabled]="price_detail_form.selected_size == 'Select'"
+						(change)="selectedSheet(price_detail_form.selected_sheet)">
+						<option [selected]="!price_detail_form.sheet_quantity.length" default hidden>Select</option>
+						<option *ngFor="let sheet of price_detail_form.sheet_quantity">{{sheet}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Pages:</label>
+					<select [(ngModel)]="price_detail_form.selected_page"
+						[disabled]="price_detail_form.selected_size == 'Select'"
+						(change)="selectedPages(price_detail_form.selected_page)">
+						<option [selected]="!price_detail_form.pages_quantity.length" default hidden>Select</option>
+						<option *ngFor="let page of price_detail_form.pages_quantity">{{page}}</option>
+					</select>
+				</div>
+
+				<div class="col">
+					<label>Gusset:</label>
+					<select [(ngModel)]="price_detail_form.selected_gusset"
+						[disabled]="price_detail_form.selected_size == 'Select'">
+						<option [selected]="!price_detail_form.gusset_quantity.length" default hidden>Select</option>
+						<option *ngFor="let gusset of price_detail_form.gusset_quantity">{{gusset}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row" style="padding: 0 50px">
+				<label style="min-width: 15%">Description</label>
+				<textarea [disabled]="price_detail_form.selected_size == 'Select'" readonly
+					[(ngModel)]="price_detail_form['component_info']['description']"></textarea>
+			</div>
+			<div class="row elements_group_container"
+				*ngIf="price_detail_form.size_info['elements_pricing'] && price_detail_form.size_info['elements_pricing'].length">
+				<p class="component_title">Select the Component Elemets:</p>
+				<div class="elements_group" *ngFor="let element of price_detail_form.size_info['elements_pricing']">
+					<label class="elements_group_label">{{element.element_name}}
+						<input type="checkbox" [(ngModel)]="element.marked">
+						<span class="checkmark"></span>
+					</label>
+				</div>
+			</div>
+			<div class="row elements_group_container"
+				*ngIf="price_detail_form.elements[price_detail_form.component] && price_detail_form.elements[price_detail_form.component].length">
+				<p class="component_title">Select the Window Elemets:</p>
+				<div class="elements_group"
+					*ngFor="let element of price_detail_form.elements[price_detail_form.component]">
+					<label class="elements_group_label">{{element.name}}
+						<input type="checkbox" [(ngModel)]="element.marked">
+						<span class="checkmark"></span>
+					</label>
+					<label *ngIf="element.value">
+						<input type="text" [disabled]="!element.marked" [(ngModel)]="element.times" placeholder="1">
+						<b>Number Of Times</b>
+					</label>
+				</div>
+			</div>
+			<div class="row submit">
+				<button
+					[ngClass]="{'active': price_detail_form.submitted && (price_detail_form.selected_size !='Select')  && (price_detail_form.price !='Select')}"
+					(click)="Calculate()">Calculate</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="modal" *ngIf="panel.modal">
+	<div class=modal-content>
+		<div class="body">
+			<div class="header">
+				<p><img class="panel_header_icon" src="assets/favicon.png"> Price Evaluate<i (click)="close()"
+						class="fa fa-times"></i></p>
+			</div>
+			<div class="body-content">
+				<div class="row elements_group_container">
+					<p class="component_title modal-component-title">Description</p>
+					<div class="elements_group component_element">
+						<label
+							class="elements_group_label">{{price_detail_form.description ? price_detail_form.description : 'None'}}</label>
+					</div>
+				</div>
+				<div class="elements_group_container">
+					<div class="elements_group">
+
+						<div class="row" style="padding-left: 0">
+							<div class="col">
+								<span>Components:</span>
+								<span>{{price_detail_form.component}}</span>
+							</div>
+							<div class="col">
+								<span>Size:</span>
+								<span>{{price_detail_form.selected_size}}</span>
+							</div>
+							<div class="col">
+								<span>Flap Side:</span>
+								<span>{{price_detail_form.selected_flap_side ? price_detail_form.selected_flap_side : 'None'}}</span>
+							</div>
+						</div>
+						<div class="row" style="padding-left: 0">
+							<div class="col">
+								<span>Stock:</span>
+								<span>{{price_detail_form.selected_stock}}</span>
+							</div>
+							<div class="col">
+								<span>Printing:</span>
+								<span>{{price_detail_form.selected_print}}</span>
+							</div>
+							<div class="col">
+								<span>Sheet:</span>
+								<span>{{price_detail_form.selected_sheet == 'Select' ? 'None' : price_detail_form.selected_sheet}}</span>
+							</div>
+						</div>
+						<div class="row" style="padding-left: 0">
+							<div class="col">
+								<span>Pages:</span>
+								<span>{{price_detail_form.selected_page == 'Select' ? 'None' : price_detail_form.selected_page}}</span>
+							</div>
+							<div class="col">
+								<span>Quantity:</span>
+								<span>{{price_detail_form.price}}</span>
+							</div>
+							<div class="col">
+								<span>Gusset:</span>
+								<span>{{price_detail_form.selected_gusset == 'Select' ? 'None' : price_detail_form.selected_page}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row elements_group_container"
+					*ngIf="filterSelectedComponent(price_detail_form.size_info['elements_pricing'])?.length">
+					<p class="component_title modal-component-title">Selected Component Elemets</p>
+					<div class="elements_group component_element"
+						*ngFor="let element of filterSelectedComponent(price_detail_form.size_info['elements_pricing'])">
+						<label class="elements_group_label">{{element.element_name}}</label>
+					</div>
+				</div>
+				<div class="row elements_group_container"
+					*ngIf="filterSelectedComponent(price_detail_form.elements[price_detail_form.component])?.length">
+					<p class="component_title modal-component-title">Selected Window Elemets</p>
+					<div class="elements_group component_element"
+						*ngFor="let element of filterSelectedComponent(price_detail_form.elements[price_detail_form.component])">
+						<label class="elements_group_label">{{element.name + ': ' }} <b>
+								{{(element.times? element.times: '1') + ' times.'}}</b></label>
+					</div>
+				</div>
+				<div class="row elements_group_container">
+					<p class="component_title modal-component-title">Price Information</p>
+					<div class="elements_group component_element">
+						<label class="elements_group_label">
+							<b>Total Price: </b> <span>{{price_detail_form.result}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row export">
+					<button class="active" (click)="exportAsExcel()"><i class="fa fa-file-excel-o"></i>Export</button> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" *ngIf="panel.stockModal">
+	<div class=modal-content>
+		<div class="body">
+			<div class="header">
+				<p><img class="panel_header_icon" src="assets/favicon.png"> Stock Evaluate<i (click)="panel.stockModal = false"
+						class="fa fa-times"></i></p>
+			</div>
+			<div class="body-content">
+					<div class="calculator">
+						<div>
+							<span>Stock</span>
+							<span>Selected Stock</span>
+						</div>
+						<div>
+							<select multiple="true" (change)="SelectCustomStock($event)"> 
+								<option default selected value="">Select</option>
+								<option *ngFor="let stock of price_detail_form.stock_quantity">{{stock}}</option>
+							</select>
+							<div>
+								<span *ngFor="let stock of price_detail_form.selected_custom_stock">{{stock}}</span>
+							</div>
+						</div>
+						<div>
+							<span>{{price_detail_form.custom_stock_result}}</span>
+							<span (click)="customCalc.add = true;customCalc.minus = false;customCalc.multiply = false;customCalc.divide = false;">+ Add</span>
+							<span (click)="customCalc.add = false;customCalc.minus = true;customCalc.multiply = false;customCalc.divide = false;">- Minus</span>
+							<span (click)="customCalc.add = false;customCalc.minus = false;customCalc.multiply = true;customCalc.divide = false;">* Multiply</span>
+							<span (click)="customCalc.add = false;customCalc.minus = false;customCalc.multiply = false;customCalc.divide = true;">/ Divide</span>
+						</div>
+						<div *ngIf="customCalc.operand">
+							Result is {{customCalc.result}}
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,31 @@
+Elements,Components,Conditions,Unit Price
+1 Window w/ patch: Add 0.0058/pc,Paper envelop OE,Can be multiple time,0.0058
+2 Window w/ patch: Add 0.0085/pc,Paper envelop OE,Can be multiple time,0.0058
+Laser Closed Face Env. Add 0.011/pc,Paper envelop OE,Can be multiple time,0.0110
+"OE size over 6"" x 9"" for split production(unseal package) - Add 0.0020-/pc (to OE cost) for glue on flap manually (updated 6-30-2015)",Paper envelop OE,,0.0020
+"OE size over 12"" x 9"" for split production(unseal package) - Add 0.0100-/pc (to OE cost) for double side tape on flap (updated 9-12-2016)",Paper envelop OE,,0.0100
+1 Window w/ patch: Add $0.0072/pcs,Chipboard envelop CH,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,Chipboard envelop CH,Can be multiple time,0.0110
+Add double side tape on flap $0.0100/pcs ,Chipboard envelop CH,Can be multiple time,0.0100
+"Flap - Pull tab / Pull out / Zip flap die cut: $0.0020-/pc, and add 0.0100-/pc for Glue seal cost(For mailing pack), or add 0.0100-/pc for double side tape seal cost(For unseal pack).",Chipboard envelop CH,Can be multiple time,0.0100
+1 Window w/ patch: Add $0.0072/pcs,Chipboard envelop OE,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,Chipboard envelop OE,Can be multiple time,0.0110
+Add double side tape on flap $0.0100/pcs,Chipboard envelop OE,Can be multiple time,0.0100
+"Flap - Pull tab / Pull out / Zip flap die cut: $0.0020-/pc, and add 0.0100-/pc for Glue seal cost(For mailing pack) cannot double side tape for unseal pack).",Chipboard envelop OE,Can be multiple time,0.0100
+1 Window w/ patch: Add $0.0072/pcs (1 Window w/o patch: Add $0.0037/pcs),Chipboard OE (Square),Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,Chipboard OE (Square),Can be multiple time,0.0110
+Add double side tape on flap $0.0100/pcs ,Chipboard OE (Square),Can be multiple time,0.0100
+"Flap - Pull tab / Pull out / Zip flap die cut: $0.0020-/pc, and add 0.0100-/pc for Glue seal cost(For mailing pack), or add 0.0100-/pc for double side tape seal cost(For unseal pack).",Chipboard OE (Square),Can be multiple time,0.0100
+1 Window w/ patch: Add $0.0072/pcs,Outer Box OB,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,Outer Box OB,Can be multiple time,0.0110
+1 Window w/ patch: Add $0.0072/pcs,Outer Sleeve OS,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,Outer Sleeve OS,Can be multiple time,0.0110
+1 Window w/ patch: Add $0.0072/pcs,SlimBox SB Slimmer SR,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,SlimBox SB Slimmer SR,Can be multiple time,0.0110
+1 Window w/ patch: Add $0.0072/pcs,SelfMailer SM,Can be multiple time,0.0072
+2 Window w/ patch: Add $0.0110/pcs,SelfMailer SM,Can be multiple time,0.0110
+1 Window w/ patch: Add 0.0058/pcs,RE,Can be multiple time,0.0058
+2 Window w/ patch: Add 0.0085/pcs,RE,Can be multiple time,0.0085
+Laser Closed Face Env. Add 0.011/pcs,RE,Can be multiple time,0.0110
+"Card with Foil (exclude Gold and Silver foil), 3D emboss and Glittering need to add $0.005 manual fold charge to every fold. If Tri-fold card is charge $0.01 aso�",Folded Card,Can be multiple time,0.0050
+If Tri-fold card is charge $0.01 aso�,Folded Card,Can be multiple time,0.0100

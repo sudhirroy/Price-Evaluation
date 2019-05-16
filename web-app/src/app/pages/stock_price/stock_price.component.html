@@ -1,0 +1,242 @@
+<div class="price_determiner_page">
+
+    <div class="price_determine_container">
+       
+        <div class="dropdown-selection">
+            <label>Component: </label>
+            <select (change)="selectComponent($event.target.value)">
+                <option default hidden>Select</option>
+                <option *ngFor="let componentInfo of stock_info_data">{{componentInfo.component}}</option>
+            </select>
+        </div>
+        <div class='container' *ngFor="let componentInfo of price_info ? price_info['component_info'] : []">
+                <div  class="panel_header"><img class="panel_header_icon" src="assets/favicon.png">
+                    {{price_info['component']}} with Size {{componentInfo['size']}}</div>
+            <div class="price_detail_row_panel">
+                <p>Component Info<i (click)="edit(componentInfo, price_info)" class="fa fa-edit"></i></p>
+                <div class="row header price_detail_row component">
+                        <div class="col">
+                            <label>Components</label>
+                        </div>
+                        <div class="col">
+                            <label>Size</label>
+                        </div>
+                        <div class="col">
+                            <label>Flap Side</label>
+                        </div>
+                        <div class="col">
+                            <label>Sheet</label>
+                        </div>
+                        <div class="col">
+                            <label>Pages</label>
+                        </div>
+                        <div class="col">
+                            <label>Gusset</label>
+                        </div>
+
+                    </div>
+                    <div class="row price_detail_row component">
+                        <div class="col">
+                            <label>{{price_info['component']}}</label>
+                        </div>
+                        <div class="col">
+                            <label>{{componentInfo['size']}}</label>
+                        </div>
+                        <div class="col">
+                            <label>{{componentInfo['flap_side']}}</label>
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                            </div>
+                        <div class="col">
+                            <label>{{componentInfo['gusset']}}</label>
+                        </div>
+                    </div>
+            </div>
+            
+            <div class="price_detail_row_panel" *ngIf="componentInfo.stocks_pricing && componentInfo.stocks_pricing.length">
+                <p>Stocks</p>
+                <div class="row header price_detail_row stock">
+                    
+                    <div class="col">
+                        <label>Stock</label>
+                    </div>
+                 
+                    <div class="col">
+                        <label>Printing</label>
+                    </div>
+                    <div class="col">
+                        <label>5k</label>
+                    </div>
+                    <div class="col">
+                        <label>10k</label>
+                    </div>
+                    <div class="col">
+                        <label>20k</label>
+                    </div>
+                    <div class="col">
+                        <label>25k</label>
+                    </div>
+                    <div class="col">
+                        <label>40k</label>
+                    </div>
+                    <div class="col">
+                        <label>50k</label>
+                    </div>
+                    <div class="col">
+                        <label>75k</label>
+                    </div>
+                    <div class="col">
+                        <label>100k</label>
+                    </div>
+                    <div class="col">
+                        <label>200k</label>
+                    </div>
+                    <div class="col">
+                        <label>250k</label>
+                    </div>
+                    <div class="col">
+                        <label>400k</label>
+                    </div>
+                    <div class="col">
+                        <label>500k</label>
+                    </div>
+                 
+                </div>
+                <div class="row price_detail_row stock" *ngFor="let stock_info of componentInfo.stocks_pricing">
+                        <div class="col">
+                                <label> {{stock_info.stock }} </label>
+                            </div>
+                   
+                    <div class="col">
+                        <label> {{stock_info.printing }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_5k ? stock_info.price_5k : 0 }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_10k }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_20k }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_25k }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_40k }} </label>
+                    </div>
+                    <div class="col">
+                       <label> {{stock_info.price_50k }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_75k }}</label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_100k }} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_200k}} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_250k}} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_400k}} </label>
+                    </div>
+                    <div class="col">
+                        <label> {{stock_info.price_500k}} </label>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="price_detail_row_panel" *ngIf="componentInfo.elements_pricing && componentInfo.elements_pricing.length">
+                    <p>Elements</p>
+                    <div class="row header price_detail_row element">
+                        <div class="col">
+                            <label>Element</label>
+                        </div>
+                        <div class="col">
+                            <label>5k</label>
+                        </div>
+                        <div class="col">
+                            <label>10k</label>
+                        </div>
+                        <div class="col">
+                            <label>20k</label>
+                        </div>
+                        <div class="col">
+                            <label>25k</label>
+                        </div>
+                        <div class="col">
+                            <label>40k</label>
+                        </div>
+                        <div class="col">
+                            <label>50k</label>
+                        </div>
+                        <div class="col">
+                            <label>75k</label>
+                        </div>
+                        <div class="col">
+                            <label>100k</label>
+                        </div>
+                        <div class="col">
+                            <label>200k</label>
+                        </div>
+                        <div class="col">
+                            <label>250k</label>
+                        </div>
+                        <div class="col">
+                            <label>400k</label>
+                        </div>
+                        <div class="col">
+                            <label>500k</label>
+                        </div>
+                       
+                    </div>
+                    <div class="row price_detail_row element" *ngFor="let element_info of componentInfo.elements_pricing">
+                        <div class="col">
+                                <label> {{element_info.element_name}} </label>
+                        </div>       
+                        <div class="col">
+                                <label> {{element_info.price_5k ? element_info.price_5k : 0}} </label>
+                            </div>          
+                        <div class="col">
+                                <label> {{element_info.price_10k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_20k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_25k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_40k}} </label>
+                            </div>
+                            <div class="col">
+                               <label> {{element_info.price_50k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_75k}}</label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_100k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_200k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_250k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_400k}} </label>
+                            </div>
+                            <div class="col">
+                                <label> {{element_info.price_500k }}</label>
+                            </div>                       
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<app-header-component [menu]="menu.pages"></app-header-component>
+<div class="page_container">
+    <aside-menu-component [menu]="menu.pages"></aside-menu-component>
+    <div class="page_display">
+        <div class="back_header"><h1>{{menu.title}}</h1></div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,247 @@
+<div class="price_determiner_page">
+	<div class="price_determine_container">
+		<div [ngClass]="{'active': panel.active}" class="panel_header"><img class="panel_header_icon" src="assets/favicon.png">
+			{{panel.header}}<i *ngIf="!panel.active" class="fa fa-plus-circle" (click)="panel.active = true"></i><i *ngIf="panel.active"
+			 class="fa fa-minus-circle" (click)="panel.active = false"></i></div>
+			 <!-- <div [ngClass]="{'active': panel.active}" class='container'>
+				<div class="row header">
+					<div class="cold">
+						<label style="padding: 0 35px;">Browse Stock</label>
+						<input (change)="openFile($event, 'stock')" type="file">
+					</div>
+					<div class="cold">
+						<label style="padding: 0 35px;">Browse Element</label>
+						<input (change)="openFile($event, 'element')" type="file">
+					</div>
+				</div>	
+			 </div>	 -->
+		<div [ngClass]="{'active': panel.active}" class='container'>
+			<div class="row header">
+				<div class="col">
+					<label>Components:</label>
+					<select [disabled]="url_info && url_info.price_info" [(ngModel)]="price_detail_form.component" (change)="selectComponent(price_detail_form.component)">
+						<option default hidden>Select</option>
+						<option *ngFor="let component of price_detail_form.components">{{component}}</option>
+					</select>
+				</div>
+				<div class="col">
+					<label>Size:</label>
+					<select  [disabled]="url_info && url_info.price_info" [(ngModel)]="price_detail_form.selected_size" (change)="selectedSize(price_detail_form.selected_size)" [disabled]="!price_detail_form.sizes.length">
+						<option [selected]="!price_detail_form.sizes.length" default hidden>Select</option>
+						<option *ngFor="let size of price_detail_form.sizes">{{size}}</option>
+					</select>
+				</div>
+				<div class="col">
+					<label>Flap Side:</label>
+					<select  [disabled]="url_info && url_info.price_info" [(ngModel)]="price_detail_form.selected_flap_side" 
+					 [disabled]="price_detail_form.selected_size == 'Select'">
+						<option [selected]="!price_detail_form.flap_sides.length" default hidden>Select</option>
+						<option *ngFor="let flap_side of price_detail_form.flap_sides">{{flap_side}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label>Gusset:</label>
+					<select  [disabled]="url_info && url_info.price_info" [(ngModel)]="price_detail_form.selected_gusset" 
+					[disabled]="price_detail_form.selected_size == 'Select'">
+					   <option [selected]="!price_detail_form.gusset_quantity.length" default hidden>Select</option>
+					   <option *ngFor="let gusset of price_detail_form.gusset_quantity">{{gusset}}</option>
+				   </select>
+				</div>
+			</div>
+			<div class="price_detail_row_panel" *ngIf="price_detail_form.component != 'Select'">
+				<p>Description</p>
+				<div class="row price_detail_row">
+					<textarea [(ngModel)]="price_detail_form.description"></textarea> 
+				</div>
+			</div>
+			<div class="price_detail_row_panel" *ngIf="price_detail_form.component != 'Select'">
+				<p>Add Number Of Stocks</p>
+				<div class="row price_detail_row stock">
+					
+					<div class="col">
+						<label>Stock</label>
+					</div>
+					<div class="col">
+						<label>Printing</label>
+					</div>
+					
+					<div class="col">
+						<label>10k</label>
+					</div>
+					<div class="col">
+						<label>20k</label>
+					</div>
+					<div class="col">
+						<label>25k</label>
+					</div>
+					<div class="col">
+						<label>40k</label>
+					</div>
+					<div class="col">
+						<label>50k</label>
+					</div>
+					<div class="col">
+						<label>75k</label>
+					</div>
+					<div class="col">
+						<label>100k</label>
+					</div>
+					<div class="col">
+						<label>200k</label>
+					</div>
+					<div class="col">
+						<label>250k</label>
+					</div>
+					<div class="col">
+						<label>400k</label>
+					</div>
+					<div class="col">
+						<label>500k</label>
+					</div>
+				
+				</div>
+				<div class="row price_detail_row stock" *ngFor="let item of price_detail_form.entry">
+					
+					<div class="col">
+						<input type="text" autofocus [(ngModel)]="item['stock']">
+					</div>
+					<div class="col">
+						<input type="text" [(ngModel)]="item['printing']">
+					</div>
+				
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_10k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_20k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_25k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_40k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_50k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_75k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_100k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_200k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_250k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_400k']">
+					</div>
+					<div class="col">
+						<input type="text" filterprice [(ngModel)]="item['price_500k']">
+					</div>
+					
+				</div>
+				<div class="row add_new">
+					<span (click)="add_new_entry()"><i class="fa fa-plus-circle"></i>Add New</span>
+				</div>
+			</div>
+			<div class="price_detail_row_panel" *ngIf="price_detail_form.component != 'Select'">
+					<p>Add Custom Elements</p>
+					<div class="row price_detail_row element">
+						<div class="col">
+							<label>Element</label>
+						</div>
+					
+						<div class="col">
+							<label>10k</label>
+						</div>
+						<div class="col">
+							<label>20k</label>
+						</div>
+						<div class="col">
+							<label>25k</label>
+						</div>
+						<div class="col">
+							<label>40k</label>
+						</div>
+						<div class="col">
+							<label>50k</label>
+						</div>
+						<div class="col">
+							<label>75k</label>
+						</div>
+						<div class="col">
+							<label>100k</label>
+						</div>
+						<div class="col">
+							<label>200k</label>
+						</div>
+						<div class="col">
+							<label>250k</label>
+						</div>
+						<div class="col">
+							<label>400k</label>
+						</div>
+						<div class="col">
+							<label>500k</label>
+						</div>
+						
+					</div>
+					<div class="row price_detail_row element" *ngFor="let item of price_detail_form.elements">
+						<div class="col">
+							<input type="text" autofocus [(ngModel)]="item['element_name']">
+						</div>
+					
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_10k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_20k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_25k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_40k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_50k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_75k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_100k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_200k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_250k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_400k']">
+						</div>
+						<div class="col">
+							<input type="text" filterprice [(ngModel)]="item['price_500k']">
+						</div>
+					
+					</div>
+					<div class="row add_new">
+						<span (click)="add_new_elements()"><i class="fa fa-plus-circle"></i>Add New</span>
+					</div>
+				</div>
+			<div class="row submit">
+				<button class="active" (click)="Calculate()">{{submit.save}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<footer>
+
+</footer>

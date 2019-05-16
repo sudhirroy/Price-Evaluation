@@ -1,0 +1,11 @@
+Angular
+set PATH=%PATH%;C:\Users\sudhir.roy\AppData\Roaming\npm\node_modules\@angular\cli\bin;
+
+Mongo
+set PATH=%PATH%;C:\Program Files\MongoDB\Server\4.0\bin
+
+Express
+set PATH=%PATH%;C:\Users\sudhir.roy\AppData\Roaming\npm\node_modules\express-generator\bin;
+
+
+ngrok http 4200 -host-header="localhost:4200"
