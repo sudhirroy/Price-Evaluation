@@ -15,33 +15,10 @@ export class PriceEvaluateComponent {
     stockModal: false
   };
   customCalc = {
-    add: false,
-    minus: false,
-    multiply: false,
-    divide: false,
-    operand: null,
-    result: null
+    result: null,
+    stockData: []
   };
-  data: any = [{
-    'QR#': 'e101',
-    'QN#': 'ravi',
-    'Job#': 1000,
-    'Ver#': '',
-    'Opt#': '',
-    'Component': '',
-    'Item code': '',
-    'description': '',
-    'total': '',
-    'Base price': '',
-    '1 window': '',
-    '2 window': '',
-    'Perso 1/s': '',
-    'Perso 2/s': '',
-    'Perforation': '',
-    'Kiss cut': '',
-    'Die cut': '',
-    'UV varnishing on 1/s': ''
-  }];
+  exportData: any = [];
   price_detail_form = {
     data: [],
     stock_data: [],
@@ -197,7 +174,6 @@ export class PriceEvaluateComponent {
   }
 
   selectPrice(price) {
-    const price_d = this.price_detail_form.printing_info['price_' + price];
     if (!(this.price_detail_form.pricing_info instanceof Array)) {
       this.price_detail_form.submitted = true;
     }
@@ -208,12 +184,31 @@ export class PriceEvaluateComponent {
      this.price_detail_form.price]);
     this.price_detail_form.pricing_info.custom_window = this.calcuclateWindowPricing();
     this.price_detail_form.pricing_info.custom_element = this.calculateCustomElement();
-    this.price_detail_form.result = (this.price_detail_form.pricing_info['printing_info'] +
-     this.price_detail_form.pricing_info.custom_window +
-     this.price_detail_form.pricing_info.custom_element);
+    this.price_detail_form.result = (this.customCalc.result ? Number(this.customCalc.result) :
+     this.price_detail_form.pricing_info['printing_info']) + this.price_detail_form.pricing_info.custom_window +
+     this.price_detail_form.pricing_info.custom_element;
      this.panel.modal = true;
   }
-
+  save() {
+    this.exportData.push({
+      'QR#': 'X',
+      'QN#': 'Y',
+      'job_id': this.price_detail_form.job_id,
+      'Ver#': '1',
+      'Opt#': 'N/A',
+      'component': this.price_detail_form.component,
+      'item_code': this.price_detail_form.item_code,
+      'description': this.price_detail_form.selected_size + ', ' + (this.price_detail_form.selected_flap_side !== 'Select' ?
+         (this.price_detail_form.selected_flap_side + ', ') : '') + (this.price_detail_form.selected_stock !== 'Select' ?
+          (this.price_detail_form.selected_stock + ', ') : '') + (this.price_detail_form.selected_print !== 'Select' ?
+             (this.price_detail_form.selected_print + ', ') : '') + (this.price_detail_form.selected_sheet !== 'Select' ?
+              (this.price_detail_form.selected_sheet + ', ') : '') + (this.price_detail_form.selected_page !== 'Select' ?
+              (this.price_detail_form.selected_page + ', ') : '') + (this.price_detail_form.selected_gusset !== 'Select' ?
+              this.price_detail_form.selected_gusset : '') ,
+      'total': this.price_detail_form.result,
+      'base_price': this.price_detail_form.pricing_info['printing_info']
+    });
+  }
   calcuclateWindowPricing() {
     let price = 0;
     const x = this.price_detail_form.elements[this.price_detail_form.component];
@@ -253,54 +248,82 @@ export class PriceEvaluateComponent {
   }
 
   exportAsExcel() {
-    this.data = [{
-      'QR#': 'X',
-      'QN#': 'Y',
-      'Job#': this.price_detail_form.job_id,
-      'Ver#': '1',
-      'Opt#': 'N/A',
-      'Component': this.price_detail_form.component,
-      'Item code': this.price_detail_form.item_code,
-      'description': this.price_detail_form.selected_size + ', ' + (this.price_detail_form.selected_flap_side !== 'Select' ?
-         (this.price_detail_form.selected_flap_side + ', ') : '') + (this.price_detail_form.selected_stock !== 'Select' ?
-          (this.price_detail_form.selected_stock + ', ') : '') + (this.price_detail_form.selected_print !== 'Select' ?
-             (this.price_detail_form.selected_print + ', ') : '') + (this.price_detail_form.selected_sheet !== 'Select' ?
-              (this.price_detail_form.selected_sheet + ', ') : '') + (this.price_detail_form.selected_page !== 'Select' ?
-              (this.price_detail_form.selected_page + ', ') : '') + (this.price_detail_form.selected_gusset !== 'Select' ?
-              this.price_detail_form.selected_gusset : '') ,
-      'total': this.price_detail_form.result,
-      'Base price': this.price_detail_form.pricing_info['printing_info'],
-      '1 window': '',
-      '2 window': '',
-      'Perso 1/s': '',
-      'Perso 2/s': '',
-      'Perforation': '',
-      'Kiss cut': '',
-      'Die cut': '',
-      'UV varnishing on 1/s': ''
-    }];
-    this.excelService.exportAsExcelFile(this.data, 'sample');
+    const uri = 'data:application/vnd.ms-excel;base64,';
+    const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"
+     xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+     <x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets>
+     </x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>`;
+    const base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))); };
+    const format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }); };
+    const table = document.getElementById('testTable');
+      const ctx = {worksheet: name || 'Worksheet', table: table.innerHTML};
+      window.location.href = uri + base64(format(template, ctx));
   }
-  SelectCustomStock(event) {
-    this.price_detail_form.selected_custom_stock = [];
-    Array.from(event.target.selectedOptions).forEach(stock => {
-      this.price_detail_form.selected_custom_stock.push(stock['value']);
+  filterCustomDragInput(dragStockData) {
+    return dragStockData.filter(item => item.name.length > 1);
+  }
+  SelectCustomStock(stock) {
+    const selectedCustomStock = this.customCalc.stockData.findIndex(item => item.name === stock);
+    let match_stock = this.price_detail_form.component_info['component_info']
+      .find(element_info => element_info.size === this.price_detail_form.selected_size).stocks_pricing
+        .filter(element_info => (element_info.stock.trim() === stock.trim() &&
+            element_info.printing === this.price_detail_form.selected_print.trim()));
+    match_stock = match_stock[0];
+    const price = parseFloat(match_stock['price_' + this.price_detail_form.price]);
+    if (selectedCustomStock < 0) {
+      if (!this.customCalc.stockData.length) {
+        this.customCalc.stockData.push({ name: stock, price: price });
+      } else {
+        const operand = this.customCalc.stockData[this.customCalc.stockData.length - 1];
+        if ( operand.name === '+' || operand.name === '-' || operand.name === '*')  {
+          this.customCalc.stockData.push({ name: stock, price: price });
+        }
+      }
+    } else {
+      if (selectedCustomStock > 0) {
+        this.customCalc.stockData.splice(selectedCustomStock, 1);
+        this.customCalc.stockData.splice(selectedCustomStock - 1, 1);
+      } else {
+        this.customCalc.stockData.splice(selectedCustomStock, 1);
+      }
+    }
+    this.calculateCustomStockPrice();
+  }
+  calculateCustomStockPrice() {
+    let price = 0;
+    this.customCalc.stockData.forEach((stock, index) => {
+      if (!index) {
+        price = stock.price;
+      } else {
+        if (stock.name.length > 0) {
+          if (this.customCalc.stockData[index - 1].name === '+') {
+            price = price + stock.price;
+          } else if (this.customCalc.stockData[index - 1].name === '-') {
+            price = price - stock.price;
+          } else if (this.customCalc.stockData[index - 1].name === '*') {
+            price = price * stock.price;
+          }
+        }
+      }
     });
+    this.customCalc.result = price.toFixed(4);
+  }
+  addOperand(operator) {
+    this.customCalc.stockData.push({name: operator, price: null});
+  }
+  openCustomStockModal() {
+    this.panel.stockModal = true;
     this.price_detail_form.printing_info = this.price_detail_form.component_info['component_info']
       .find(element_info => element_info.size === this.price_detail_form.selected_size).stocks_pricing
-      .filter(element_info => (element_info.stock.trim() === this.price_detail_form.selected_custom_stock[0].trim() &&
-      element_info.printing === this.price_detail_form.selected_print.trim()));
-      console.log(this.price_detail_form.selected_custom_stock, this.price_detail_form.printing_info);
-      this.price_detail_form.printing_info = this.price_detail_form.printing_info[0];
-     this.price_detail_form.custom_stock_result = parseFloat(this.price_detail_form.printing_info['price_' +
+        .filter(element_info => (element_info.stock.trim() === this.price_detail_form.selected_stock.trim() &&
+            element_info.printing === this.price_detail_form.selected_print.trim()));
+    this.price_detail_form.printing_info = this.price_detail_form.printing_info[0];
+    this.customCalc.result = parseFloat(this.price_detail_form.printing_info['price_' +
        this.price_detail_form.price]);
-       if (!this.customCalc.operand) {
-         this.customCalc.operand = this.price_detail_form.custom_stock_result;
-       } else {
-         this.customCalc.result = this.customCalc.operand - this.price_detail_form.custom_stock_result;
-       }
   }
-
+  isSelectedStock(stock) {
+    return this.customCalc.stockData.find( item => item.name === stock );
+  }
 }
 
 

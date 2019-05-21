@@ -60,7 +60,7 @@
 						<option *ngFor="let stock of price_detail_form.stock_quantity">{{stock}}</option>
 					</select>
 					<i *ngIf="price_detail_form.submitted && (price_detail_form.selected_size !='Select')  && (price_detail_form.price !='Select')" 
-					style="position: absolute;right: -14px;cursor: pointer;color: #46b29d;font-weight: bold;" class="fa fa-calculator" (click)="panel.stockModal = true;"></i>
+					style="position: absolute;right: -14px;cursor: pointer;color: #46b29d;font-weight: bold;" class="fa fa-calculator" (click)="openCustomStockModal()"></i>
 				</div>
 			</div>
 
@@ -232,11 +232,12 @@
 					</div>
 				</div>
 				<div class="row export">
+					<button class="active" (click)="save()">Save</button> 
 					<button class="active" (click)="exportAsExcel()"><i class="fa fa-file-excel-o"></i>Export</button> 
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> 
 </div>
 <div class="modal" *ngIf="panel.stockModal">
 	<div class=modal-content>
@@ -247,31 +248,76 @@
 			</div>
 			<div class="body-content">
 					<div class="calculator">
-						<div>
-							<span>Stock</span>
-							<span>Selected Stock</span>
-						</div>
-						<div>
-							<select multiple="true" (change)="SelectCustomStock($event)"> 
-								<option default selected value="">Select</option>
-								<option *ngFor="let stock of price_detail_form.stock_quantity">{{stock}}</option>
-							</select>
-							<div>
-								<span *ngFor="let stock of price_detail_form.selected_custom_stock">{{stock}}</span>
+						<div class="stock_details">
+							<div class="border_bottom">
+								<span><b>Stock</b></span>
+								<span><b>Selected Stock</b></span>
 							</div>
-						</div>
-						<div>
-							<span>{{price_detail_form.custom_stock_result}}</span>
-							<span (click)="customCalc.add = true;customCalc.minus = false;customCalc.multiply = false;customCalc.divide = false;">+ Add</span>
-							<span (click)="customCalc.add = false;customCalc.minus = true;customCalc.multiply = false;customCalc.divide = false;">- Minus</span>
-							<span (click)="customCalc.add = false;customCalc.minus = false;customCalc.multiply = true;customCalc.divide = false;">* Multiply</span>
-							<span (click)="customCalc.add = false;customCalc.minus = false;customCalc.multiply = false;customCalc.divide = true;">/ Divide</span>
-						</div>
-						<div *ngIf="customCalc.operand">
-							Result is {{customCalc.result}}
+							<div class="custom_stock_list">
+								<ul>
+									<li (click)="SelectCustomStock(stock)" draggable="true" [ngClass]="{'active': isSelectedStock(stock) }" *ngFor="let stock of price_detail_form.stock_quantity">{{stock}}</li>
+								</ul>
+								<ul>
+									<li *ngFor="let stock of customCalc.stockData">{{stock.name}}</li> 
+								</ul>
+							</div>
+							<div class="evaluation border_top">
+								<span (click)="addOperand('+')"><i class="fa fa-plus"></i></span>
+								<span (click)="addOperand('-')"><i class="fa fa-minus"></i></span>
+								<span (click)="addOperand('*')"><i class="fa fa-times"></i></span>
+							</div>
+						</div> 
+						<div class="total">
+							<div class="border_bottom">
+								<span><b>Stock Details</b></span>
+								<span><b>Price</b></span>
+							</div>
+							<div *ngFor="let stock of filterCustomDragInput(customCalc.stockData);let i = index">
+								<span>{{stock.name}}:</span>
+								<span>{{ i > 0 ? ( i > 1 ? (customCalc.stockData[(i * 2) - 1].name + ' ' + stock.price) : (customCalc.stockData[i].name + ' ' + stock.price)) : stock.price}}</span>
+							</div> 
+							<div class="border_top">
+								<span>Total Evaluation for Base Price </span>
+								<span class="total_price">{{customCalc.result}}</span>
+							</div>
 						</div>
 					</div>
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
+<table id="testTable" summary="Code page support in different versions of MS Windows."  rules="groups" frame="hsides" border="2">
+		<colgroup align="center"></colgroup>
+		<colgroup align="left"></colgroup>
+		<colgroup span="2" align="center"></colgroup>
+		<colgroup span="3" align="center"></colgroup>
+		<thead valign="top">
+			<tr style="background-color: #8799d1;color: #eee;font-size: 26px;text-align: center">
+				<th><b>QR#</b></th>
+				<th><b>QN#</b></th>
+				<th><b>Job#</b></th>
+				<th><b>Ver#</b></th>
+				<th><b>Opt#</b></th>
+				<th><b>Component</b></th>
+				<th><b>Item code</b></th>
+				<th><b>Description</b></th>
+				<th><b>Base price</b></th>
+				<th><b>Total</b></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let data of  exportData" style="font-size: 26px;text-align: center">
+				<td>X</td>
+				<td>X</td>
+				<td>{{data.job_id}}</td>
+				<td>1</td> 
+				<td>N/A</td>
+				<td>{{data.component}}</td>
+				<td>{{data.item_code}}</td>
+				<td>{{data.description}}</td>
+				<td>{{data.base_price}}</td>
+				<td style="background-color: #f2ef3b;">{{data.total}}</td>
+			</tr>
+		</tbody>
+	</table> 
+  

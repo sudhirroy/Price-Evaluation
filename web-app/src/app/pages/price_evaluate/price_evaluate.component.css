@@ -159,9 +159,15 @@ select,.text {
     padding: 30px 50px 0px 50px;
   }
   .export button {
+    position: relative;
+    padding: 10px 30px;
+    border-radius: 4px;
+  }
+  .export button:last-child {
       position: relative;
       padding: 10px 30px 10px 50px;
       border-radius: 4px;
+      margin-left: 25px;
   }
   .export button i {
     position: absolute;
@@ -423,12 +429,76 @@ textarea {
 .calculator {
     padding: 25px;
     display: flex;
-    flex-direction: column;
     width: 100%;
+    justify-content: space-between;
 }
-.calculator div {
+.calculator .stock_details {
+    width: 58%;
+    display: flex;
+    flex-direction: column;
+    border-right: 4px solid grey;
+    padding-right: 15px;
+}
+.calculator .stock_details .selected_custom_Stock {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    text-align: right;
+}
+.calculator .total {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+.calculator .stock_details div, .calculator .total div {
     display: flex;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 25px;
+}
+.calculator .stock_details i {
+    border-radius: 100%;
+    background: gainsboro;
+    padding: 16px 22px;
+    cursor: pointer;
+}
+.calculator .stock_details .custom_stock_list ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 225px;
+    overflow-y: auto;
+    border: thin solid gainsboro;
+}
+.calculator .stock_details .custom_stock_list ul li {
+    border: thin solid #46b29d;
+    padding: 10px;
+    cursor: pointer;
+}
+.calculator .stock_details .custom_stock_list ul li.active {
+    background-color: #46b29d;
+    color: white;
+    border-color: white;
+}
+.calculator .stock_details i:hover {
+    background: grey;
+}
+.calculator .stock_details .evaluation {
+    padding: 15px 0;;
+}
+.border_bottom {
+    border-bottom: thin solid gainsboro;
+    padding-bottom: 5px;
+}
+.border_top {
+    border-top: thin solid gainsboro;
+}
+.calculator .total .total_price {
+    font-weight: bold;
+    color: #46b29d;
+}
+table {
+    display: none;
 }
