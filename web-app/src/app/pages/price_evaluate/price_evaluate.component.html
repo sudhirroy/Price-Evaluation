@@ -286,6 +286,7 @@
 		</div>
 	</div>
 </div> 
+<!-- VALIGN = Middle-->
 <table id="testTable" summary="Code page support in different versions of MS Windows."  rules="groups" frame="hsides" border="2">
 		<colgroup align="center"></colgroup>
 		<colgroup align="left"></colgroup>
@@ -303,6 +304,8 @@
 				<th><b>Description</b></th>
 				<th><b>Base price</b></th>
 				<th><b>Total</b></th>
+				<th><b>Custom Window</b></th>
+				<th><b>Custom Elements</b></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -317,6 +320,12 @@
 				<td>{{data.description}}</td>
 				<td>{{data.base_price}}</td>
 				<td style="background-color: #f2ef3b;">{{data.total}}</td>
+				<td>
+					<span *ngFor="let element of filterSelectedComponent(price_detail_form.elements[price_detail_form.component])">{{element.name + ': ' }} <b>
+							{{(element.times? element.times: '1') + ' times. '}}</b>
+					</span>
+				</td>
+				<td><span *ngFor="let element of filterSelectedComponent(price_detail_form.size_info['elements_pricing'])">{{element.element_name}}</span></td>
 			</tr>
 		</tbody>
 	</table> 
